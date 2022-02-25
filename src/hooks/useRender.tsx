@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { UseNodeReturn } from "./useNodes";
 import { Layer, UseLayersReturn } from "./useLayers";
 import { UseCursorReturn } from "./useCursor";

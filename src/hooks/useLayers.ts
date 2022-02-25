@@ -15,7 +15,7 @@ export type UseLayersReturn = {
 };
 
 const useLayers = ({ initialLayers }: UseLayerArgs): UseLayersReturn => {
-  const [layers, setLayers] = useState<Layer[]>(
+  const [layers, _setLayers] = useState<Layer[]>(
     initialLayers.map((l) => ({ ...l, open: !!l.open }))
   );
 
