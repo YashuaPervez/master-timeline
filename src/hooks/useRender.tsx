@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { UseNodeReturn } from "./useNodes";
 import { Layer, UseLayersReturn } from "./useLayers";
+import { UseCursorReturn } from "./useCursor";
 
 type UseRenderArgs = {
   zoom: number;
@@ -8,6 +9,7 @@ type UseRenderArgs = {
   leftPosition: number;
   controlNodes: UseNodeReturn;
   controlLayers: UseLayersReturn;
+  controlCursor: UseCursorReturn;
 };
 
 let renderedLayers: string[] = [];
@@ -18,9 +20,11 @@ const useRender = ({
   leftPosition,
   controlNodes,
   controlLayers,
+  controlCursor,
 }: UseRenderArgs) => {
   const { nodes, moveNodeStart } = controlNodes;
   const { layers } = controlLayers;
+  const { progress } = controlCursor;
 
   const renderSecondGuides = () => {
     let seconds = 0;
@@ -120,6 +124,21 @@ const useRender = ({
     return layerNodesArray;
   };
 
+  const renderCursor = () => {
+    return (
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: progress * zoom * 100,
+          width: 1,
+          backgroundColor: "purple",
+        }}
+      ></div>
+    );
+  };
+
   const renderNodes = () => {
     const nodesArray: React.ReactNode[] = [];
     nodes.forEach((node) => {
@@ -155,6 +174,7 @@ const useRender = ({
     renderDecimeterGuides,
     renderLayers,
     renderNodes,
+    renderCursor,
   };
 };
 

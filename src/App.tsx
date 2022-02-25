@@ -7,8 +7,8 @@ const App = () => {
       <Timeline
         duration={30}
         initialZoom={1}
-        zoomSpeed={0.05}
-        panSpeed={1}
+        zoomSpeed={0.2}
+        panSpeed={1.4}
         initialNodes={[
           {
             id: "node-1",

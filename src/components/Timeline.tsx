@@ -5,6 +5,7 @@ import useRender from "../hooks/useRender";
 import useZoomAndPan from "../hooks/useZoomAndPan";
 import useNodes, { Node } from "../hooks/useNodes";
 import useLayers, { Layer } from "../hooks/useLayers";
+import useCursor from "../hooks/useCursor";
 import "./timeline.css";
 
 type TimelineProps = {
@@ -33,25 +34,32 @@ const Timeline: React.FC<TimelineProps> = ({
     });
 
   const controlLayers = useLayers({ initialLayers });
+  const controlCursor = useCursor();
   const controlNodes = useNodes({ initialNodes, zoom });
   const {
     renderSecondGuides,
     renderDecimeterGuides,
     renderLayers,
+    renderCursor,
     renderNodes,
   } = useRender({
     zoom,
     duration,
     controlNodes,
-    leftPosition,
     controlLayers,
+    leftPosition,
+    controlCursor,
   });
 
   return (
     <div className="timeline">
       <div className="layer-bar">a</div>
       <div className="main">
-        <div className="controls">b</div>
+        <div className="controls">
+          <button onClick={controlCursor.startProgress}>Start</button>
+          <button onClick={controlCursor.reset}>Reset</button>
+          <button onClick={controlCursor.stopProgress}>Stop</button>
+        </div>
         <div
           className="scrollable-container"
           id="scrollable-container"
@@ -65,6 +73,7 @@ const Timeline: React.FC<TimelineProps> = ({
             {renderLayers()}
             {renderSecondGuides()}
             {renderDecimeterGuides()}
+            {renderCursor()}
           </div>
           {renderNodes()}
         </div>
