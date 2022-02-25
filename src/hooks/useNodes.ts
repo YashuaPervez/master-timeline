@@ -89,12 +89,20 @@ const useNodes = ({ initialNodes, zoom, leftPosition }: UseNodeArgs): UseNodeRet
     const timeClicked  = (positionInScrollContainer.x - leftPosition) / (zoom * 100);
     const layerIndex = Math.floor((positionInScrollContainer.y - 40) / 40);
 
+    let position: number = 0;
+    if (zoom < 3.6) {
+      position = Math.round(timeClicked)
+    }else if (zoom >= 3.6){
+      position = Math.round(timeClicked * 10) / 10;
+
+    }
+
     setNodes(prev => {
 
       const newNode = {
         id: `${new Date().getTime()}`,
         layer: layers[layerIndex],
-        position: Math.round(timeClicked),
+        position,
       }
 
       return [...prev, newNode]
