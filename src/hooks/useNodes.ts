@@ -12,22 +12,25 @@ export type MoveNodeStart = (
   id: string,
   position: number
 ) => void;
+type AddNewNode = (e: React.MouseEvent, layers: string[]) => void;
 
 type UseNodeArgs = {
   initialNodes: Node[];
   zoom: number;
+  leftPosition: number;
 };
 
 export type UseNodeReturn = {
   nodes: Node[];
   moveNodeStart: MoveNodeStart;
+  addNewNode: AddNewNode
 };
 
 let registeredEvent: React.MouseEvent | null = null;
 let registeredId: string = "";
 let registeredPositon: number = 0;
 
-const useNodes = ({ initialNodes, zoom }: UseNodeArgs): UseNodeReturn => {
+const useNodes = ({ initialNodes, zoom, leftPosition }: UseNodeArgs): UseNodeReturn => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
 
   const moveNodeHandler = (e: MouseEvent) => {
@@ -74,9 +77,34 @@ const useNodes = ({ initialNodes, zoom }: UseNodeArgs): UseNodeReturn => {
     document.addEventListener("mouseup", mouseUpHandler);
   };
 
+  const addNewNode: AddNewNode = (e, layers) => {
+    const scrollbarContainer = document.getElementById("scrollable-container") as HTMLDivElement;
+    const { x: scX, y: scY } = scrollbarContainer.getBoundingClientRect();
+
+    const positionInScrollContainer = {
+      x: e.clientX - scX,
+      y: e.clientY - scY,
+    }
+
+    const timeClicked  = (positionInScrollContainer.x - leftPosition) / (zoom * 100);
+    const layerIndex = Math.floor((positionInScrollContainer.y - 40) / 40);
+
+    setNodes(prev => {
+
+      const newNode = {
+        id: `${new Date().getTime()}`,
+        layer: layers[layerIndex],
+        position: Math.round(timeClicked),
+      }
+
+      return [...prev, newNode]
+    })
+  }
+
   return {
     nodes,
     moveNodeStart,
+    addNewNode
   };
 };
 

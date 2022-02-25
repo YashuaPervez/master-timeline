@@ -226,6 +226,7 @@ const useRender = ({
     renderLayersLabels,
     renderNodes,
     renderCursor,
+    renderedLayers
   };
 };
 

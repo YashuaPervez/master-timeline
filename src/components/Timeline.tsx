@@ -35,7 +35,7 @@ const Timeline: React.FC<TimelineProps> = ({
 
   const controlLayers = useLayers({ initialLayers });
   const controlCursor = useCursor();
-  const controlNodes = useNodes({ initialNodes, zoom });
+  const controlNodes = useNodes({ initialNodes, zoom, leftPosition });
   const {
     renderSecondGuides,
     renderDecimeterGuides,
@@ -43,6 +43,7 @@ const Timeline: React.FC<TimelineProps> = ({
     renderLayersLabels,
     renderCursor,
     renderNodes,
+    renderedLayers,
   } = useRender({
     zoom,
     duration,
@@ -50,6 +51,7 @@ const Timeline: React.FC<TimelineProps> = ({
     controlLayers,
     leftPosition,
     controlCursor,
+    
   });
 
   return (
@@ -72,6 +74,7 @@ const Timeline: React.FC<TimelineProps> = ({
             className="timeline-bar"
             style={{ width: duration * zoom * 100, left: leftPosition }}
             onMouseDown={timelineBarMouseDown}
+            onDoubleClick={(e) => controlNodes.addNewNode(e, renderedLayers)}
           >
             {renderLayers()}
             {renderSecondGuides()}
