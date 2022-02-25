@@ -40,6 +40,7 @@ const Timeline: React.FC<TimelineProps> = ({
     renderSecondGuides,
     renderDecimeterGuides,
     renderLayers,
+    renderLayersLabels,
     renderCursor,
     renderNodes,
   } = useRender({
@@ -53,7 +54,9 @@ const Timeline: React.FC<TimelineProps> = ({
 
   return (
     <div className="timeline">
-      <div className="layer-bar">a</div>
+      <div className="layer-bar">
+        <ul className="layers">{renderLayersLabels()}</ul>
+      </div>
       <div className="main">
         <div className="controls">
           <button onClick={controlCursor.startProgress}>Start</button>

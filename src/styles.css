@@ -5,6 +5,10 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.app {
-  padding: 50px;
+ul {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
 }

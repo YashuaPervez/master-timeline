@@ -22,7 +22,7 @@ const useRender = ({
   controlCursor,
 }: UseRenderArgs) => {
   const { nodes, moveNodeStart } = controlNodes;
-  const { layers } = controlLayers;
+  const { layers, toggleLayer } = controlLayers;
   const { progress } = controlCursor;
 
   const renderSecondGuides = () => {
@@ -89,7 +89,9 @@ const useRender = ({
     const _renderedLayers: string[] = [];
 
     const destructureLayerArray = (layers: Layer[]) => {
-      layers.forEach((layer) => {
+      layers.forEach((layer, i) => {
+        const childToBeRendered = layer.open && layer.childrens?.length !== 0;
+
         // Push to main array
         layerNodesArray.push(
           <div
@@ -98,19 +100,16 @@ const useRender = ({
               top: 40 + 40 * layerNodesArray.length,
               left: 0,
               right: 0,
-              lineHeight: "40px",
-              borderBottom: "1px solid black",
-              padding: "0px 8px",
+              height: "40px",
+              borderBottom: childToBeRendered ? "" : "1px solid black",
+              borderTop: i === 0 ? "1px solid black" : undefined,
             }}
             className="layer"
-          >
-            {layer.id}
-          </div>
+          ></div>
         );
         _renderedLayers.push(layer.id);
 
         // Operate on child
-        const childToBeRendered = layer.open && layer.childrens?.length !== 0;
         if (childToBeRendered) {
           destructureLayerArray(layer.childrens || []);
         }
@@ -119,6 +118,58 @@ const useRender = ({
 
     destructureLayerArray(layers);
     renderedLayers = _renderedLayers;
+
+    return layerNodesArray;
+  };
+
+  const renderLayersLabels = () => {
+    const layerNodesArray: React.ReactNode[] = [];
+
+    const destructureLayerArray = (layers: Layer[]) => {
+      layers.forEach((layer, i) => {
+        const hasChildren = layer.childrens && layer.childrens?.length !== 0
+        const childToBeRendered = layer.open && hasChildren;
+
+        // Push to main array
+        layerNodesArray.push(
+          <div
+            style={{
+              position: "absolute",
+              top: 40 * layerNodesArray.length,
+              left: 0,
+              right: 0,
+              height: 40,
+              borderBottom: childToBeRendered ? "" : "1px solid black",
+              borderTop: i === 0 ? "1px solid black" : undefined,
+              padding: "0px 10px",
+              display: "flex",
+              alignItems: "center",
+            }}
+            className="layer"
+          >
+            <div
+              style={{
+                flex: 1,
+              }}
+            >
+              {layer.id}
+            </div>
+            {hasChildren && (
+              <div>
+                <button onClick={() => toggleLayer(layer.id)}>{layer.open ? "Close" : "Open"}</button>
+              </div>
+            )}
+          </div>
+        );
+
+        // Operate on child
+        if (childToBeRendered) {
+          destructureLayerArray(layer.childrens || []);
+        }
+      });
+    };
+
+    destructureLayerArray(layers);
 
     return layerNodesArray;
   };
@@ -172,6 +223,7 @@ const useRender = ({
     renderSecondGuides,
     renderDecimeterGuides,
     renderLayers,
+    renderLayersLabels,
     renderNodes,
     renderCursor,
   };
