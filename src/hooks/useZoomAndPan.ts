@@ -90,7 +90,7 @@ const useZoomAndPan = ({
 
     const minLeft = (duration * newZoom * 100 - scW) * -1;
 
-    if (newZoom > 1.2 && newZoom < 5) {
+    if (newZoom > 1.2 && newZoom < 10) {
       if (newLeftPosition > 0) {
         setLeftPosition(0);
       } else if (newLeftPosition < minLeft) {

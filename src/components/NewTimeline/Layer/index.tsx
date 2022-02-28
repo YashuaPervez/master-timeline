@@ -1,5 +1,7 @@
+import { useState } from "react";
+
 //
-import { DownAngle } from "../../icon";
+import { DownAngle, Eye } from "../../icon";
 import { UseLayerReturn } from "./useLayer";
 
 export type LayerObj = {
@@ -29,13 +31,22 @@ const Layer: React.FC<LayerProps> = ({
   ancestors,
 }) => {
   const hasChidren = layer.children && layer.children.length;
-
   const myAddress = [...ancestors, layer.id];
+
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   return (
     <>
-      <div className="layer">
+      <div className={`layer ${disabled ? "disabled" : ""}`}>
         <div className="label" style={{ width: sidebarWidth }}>
+          <div className="eye-button">
+            <button
+              className={`${disabled ? "in-active" : ""}`}
+              onClick={() => setDisabled((prev) => !prev)}
+            >
+              <Eye />
+            </button>
+          </div>
           <div className="title" style={{ paddingLeft: level * 40 }}>
             {hasChidren && (
               <button
@@ -50,7 +61,7 @@ const Layer: React.FC<LayerProps> = ({
           <div className="controls">
             {layer.controls?.select && (
               <div className="control-unit">
-                <select className="select form-unit">
+                <select className="select form-unit" disabled={disabled}>
                   <option>Normal</option>
                   <option>Type 2</option>
                   <option>Type 3</option>
@@ -59,7 +70,7 @@ const Layer: React.FC<LayerProps> = ({
             )}
             {layer.controls?.input && (
               <div className="control-unit">
-                <input className="input form-unit" />
+                <input className="input form-unit" disabled={disabled} />
               </div>
             )}
           </div>

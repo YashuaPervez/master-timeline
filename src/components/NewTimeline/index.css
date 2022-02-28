@@ -87,13 +87,54 @@
   padding: 0px 12px;
 }
 
+.timeline .layers-list .layer.disabled .label {
+  background-color: var(--lies);
+}
+
+.timeline .layers-list .layer .label .eye-button {
+  margin-right: 12px;
+  position: relative;
+}
+
+.timeline .layers-list .layer .label .eye-button button {
+  height: 18px;
+  width: 18px;
+  background-color: transparent;
+  border-radius: 4px;
+  border: none;
+}
+
+.timeline .layers-list .layer .label .eye-button button.in-active::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  height: 20px;
+  width: 1px;
+  background-color: #fff;
+}
+
 .timeline .layers-list .layer .label .title {
-  width: 240px;
+  width: 260px;
+  background-color: var(--main);
+  z-index: 10;
+  height: 21px;
+  display: flex;
+  align-items: center;
+}
+
+.timeline .layers-list .layer.layer.disabled .label .title {
+  background-color: var(--lies);
 }
 
 .timeline .layers-list .layer .label .text {
   color: #fff;
   margin-left: 6px;
+}
+
+.timeline .layers-list .layer.disabled .label .text {
+  color: rgb(143, 143, 143);
 }
 
 .timeline .layers-list .layer .label button {
@@ -114,7 +155,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: calc(100% - 240px);
+  width: calc(100% - 260px - 30px);
   overflow: hidden;
 }
 
@@ -130,6 +171,10 @@
   width: 160px;
   height: 18px;
   outline: none;
+}
+
+.timeline .layers-list .layer.layer.disabled .label .controls .form-unit {
+  color: rgb(143, 143, 143);
 }
 
 .timeline .layers-list .layer .label .controls .select {

@@ -41,6 +41,8 @@ const Sidebar: React.FC<SidebarProps> = ({ children, width, setWidth }) => {
 
   return (
     <div className="sidebar" style={{ width }}>
+      <div className="column column-1"></div>
+      <div className="column column-2"></div>
       <div className="sidebar-resizer" onMouseDown={resizeStartHandler}></div>
       {children}
     </div>
