@@ -10,20 +10,25 @@ import { LayerObj } from "./Layer";
 import useLayer from "./Layer/useLayer";
 import useZoomAndPan from "../../hooks/useZoomAndPan";
 import useRender from "../../hooks/useRender";
+import useNodes, { Node } from "../../hooks/useNodes";
 
 type NewTimelineProps = {
   initialLayers: LayerObj[];
+  initialNodes: Node[];
 };
 
 const duration = 15;
 
-const NewTimeline: React.FC<NewTimelineProps> = ({ initialLayers }) => {
+const NewTimeline: React.FC<NewTimelineProps> = ({
+  initialLayers,
+  initialNodes,
+}) => {
   const [width, setWidth] = useState<number>(420);
 
-  const layerControl = useLayer({
+  const controlLayer = useLayer({
     initialLayers,
   });
-  const { layers } = layerControl;
+  const { layers, renderedLayers } = controlLayer;
   const { leftPosition, zoom, timelineBarMouseDown, wheelHandler } =
     useZoomAndPan({
       initialZoom: 3,
@@ -31,10 +36,17 @@ const NewTimeline: React.FC<NewTimelineProps> = ({ initialLayers }) => {
       panSpeed: 1,
       zoomSpeed: 0.1,
     });
-  const { renderSecondGuides, renderDecimeterGuides } = useRender({
+  const controlNodes = useNodes({
+    zoom,
+    leftPosition,
+    initialNodes,
+  });
+  const { renderSecondGuides, renderDecimeterGuides, renderNodes } = useRender({
     zoom,
     duration,
     leftPosition,
+    controlNodes,
+    controlLayer,
   });
 
   return (
@@ -52,7 +64,7 @@ const NewTimeline: React.FC<NewTimelineProps> = ({ initialLayers }) => {
             layer={layer}
             level={0}
             sidebarWidth={width}
-            control={layerControl}
+            control={controlLayer}
             ancestors={[]}
           />
         ))}
@@ -70,6 +82,8 @@ const NewTimeline: React.FC<NewTimelineProps> = ({ initialLayers }) => {
           style={{ width: duration * zoom * 100, left: leftPosition }}
           onMouseDown={timelineBarMouseDown}
         ></div>
+
+        {renderNodes()}
       </div>
     </div>
   );

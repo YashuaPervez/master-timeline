@@ -23,14 +23,18 @@ type UseNodeArgs = {
 export type UseNodeReturn = {
   nodes: Node[];
   moveNodeStart: MoveNodeStart;
-  addNewNode: AddNewNode
+  addNewNode: AddNewNode;
 };
 
 let registeredEvent: React.MouseEvent | null = null;
 let registeredId: string = "";
 let registeredPositon: number = 0;
 
-const useNodes = ({ initialNodes, zoom, leftPosition }: UseNodeArgs): UseNodeReturn => {
+const useNodes = ({
+  initialNodes,
+  zoom,
+  leftPosition,
+}: UseNodeArgs): UseNodeReturn => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
 
   const moveNodeHandler = (e: MouseEvent) => {
@@ -39,6 +43,9 @@ const useNodes = ({ initialNodes, zoom, leftPosition }: UseNodeArgs): UseNodeRet
     }
 
     const movedPx = e.clientX - registeredEvent.clientX;
+
+    console.log("aaaa movedPx >>", movedPx);
+
     const movedSeconds = movedPx / (zoom * 100);
 
     if (zoom < 3.6) {
@@ -78,41 +85,42 @@ const useNodes = ({ initialNodes, zoom, leftPosition }: UseNodeArgs): UseNodeRet
   };
 
   const addNewNode: AddNewNode = (e, layers) => {
-    const scrollbarContainer = document.getElementById("scrollable-container") as HTMLDivElement;
+    const scrollbarContainer = document.getElementById(
+      "scrollable-container"
+    ) as HTMLDivElement;
     const { x: scX, y: scY } = scrollbarContainer.getBoundingClientRect();
 
     const positionInScrollContainer = {
       x: e.clientX - scX,
       y: e.clientY - scY,
-    }
+    };
 
-    const timeClicked  = (positionInScrollContainer.x - leftPosition) / (zoom * 100);
+    const timeClicked =
+      (positionInScrollContainer.x - leftPosition) / (zoom * 100);
     const layerIndex = Math.floor((positionInScrollContainer.y - 40) / 40);
 
     let position: number = 0;
     if (zoom < 3.6) {
-      position = Math.round(timeClicked)
-    }else if (zoom >= 3.6){
+      position = Math.round(timeClicked);
+    } else if (zoom >= 3.6) {
       position = Math.round(timeClicked * 10) / 10;
-
     }
 
-    setNodes(prev => {
-
+    setNodes((prev) => {
       const newNode = {
         id: `${new Date().getTime()}`,
         layer: layers[layerIndex],
         position,
-      }
+      };
 
-      return [...prev, newNode]
-    })
-  }
+      return [...prev, newNode];
+    });
+  };
 
   return {
     nodes,
     moveNodeStart,
-    addNewNode
+    addNewNode,
   };
 };
 

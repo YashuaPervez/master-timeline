@@ -67,6 +67,13 @@ const App = () => {
               ],
             },
           ]}
+          initialNodes={[
+            {
+              id: "node-1",
+              layer: "main-layer",
+              position: 2.4,
+            },
+          ]}
         />
         {/* <Timeline
           duration={100}

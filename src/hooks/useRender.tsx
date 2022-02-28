@@ -1,28 +1,26 @@
 import { UseNodeReturn } from "./useNodes";
-import { Layer, UseLayersReturn } from "./useLayers";
+import { UseLayerReturn } from "../components/NewTimeline/Layer/useLayer";
 import { UseCursorReturn } from "./useCursor";
 
 type UseRenderArgs = {
   zoom: number;
   duration: number;
   leftPosition: number;
-  // controlNodes: UseNodeReturn;
-  // controlLayers: UseLayersReturn;
+  controlNodes: UseNodeReturn;
+  controlLayer: UseLayerReturn;
   // controlCursor: UseCursorReturn;
 };
-
-let renderedLayers: string[] = [];
 
 const useRender = ({
   zoom,
   duration,
   leftPosition,
-}: // controlNodes,
-// controlLayers,
-// controlCursor,
+  controlNodes,
+  controlLayer,
+}: // controlCursor,
 UseRenderArgs) => {
-  // const { nodes, moveNodeStart } = controlNodes;
-  // const { layers, toggleLayer } = controlLayers;
+  const { nodes, moveNodeStart } = controlNodes;
+  const { renderedLayers } = controlLayer;
   // const { progress } = controlCursor;
 
   const renderSecondGuides = () => {
@@ -219,42 +217,42 @@ UseRenderArgs) => {
   //   );
   // };
 
-  // const renderNodes = () => {
-  //   const nodesArray: React.ReactNode[] = [];
-  //   nodes.forEach((node) => {
-  //     if (renderedLayers.includes(node.layer)) {
-  //       nodesArray.push(
-  //         <div
-  //           style={{
-  //             position: "absolute",
-  //             top: 45 + renderedLayers.indexOf(node.layer) * 40,
-  //             left: zoom * node.position * 100 + leftPosition,
-  //             transform: "translateX(-50%)",
-  //           }}
-  //         >
-  //           <div
-  //             style={{
-  //               height: 30,
-  //               width: 30,
-  //               backgroundColor: "purple",
-  //               borderRadius: "50%",
-  //             }}
-  //             onMouseDown={(e) => moveNodeStart(e, node.id, node.position)}
-  //           ></div>
-  //         </div>
-  //       );
-  //     }
-  //   });
+  const renderNodes = () => {
+    const nodesArray: React.ReactNode[] = [];
+    nodes.forEach((node) => {
+      if (renderedLayers.includes(node.layer)) {
+        nodesArray.push(
+          <div
+            style={{
+              position: "absolute",
+              top: 88 + renderedLayers.indexOf(node.layer) * 21,
+              left: zoom * node.position * 100 + leftPosition,
+              transform: "translateX(-50%)",
+            }}
+          >
+            <div
+              style={{
+                height: 6,
+                width: 6,
+                backgroundColor: "var(--active)",
+                borderRadius: "50%",
+              }}
+              onMouseDown={(e) => moveNodeStart(e, node.id, node.position)}
+            ></div>
+          </div>
+        );
+      }
+    });
 
-  //   return nodesArray;
-  // };
+    return nodesArray;
+  };
 
   return {
     renderSecondGuides,
     renderDecimeterGuides,
     // renderLayers,
     // renderLayersLabels,
-    // renderNodes,
+    renderNodes,
     // renderCursor,
     // renderedLayers
   };

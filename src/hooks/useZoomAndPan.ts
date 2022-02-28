@@ -103,8 +103,6 @@ const useZoomAndPan = ({
   };
 
   const timelineBarMouseDown: React.MouseEventHandler = (e) => {
-    console.log("aaaa clicked");
-
     registeredEvent = e;
     registeredLeftPosition = leftPosition;
 
