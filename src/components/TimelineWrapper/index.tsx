@@ -12,8 +12,8 @@ const TimelineWrapper: React.FC = ({ children }) => {
   const resizeHandler = (e: MouseEvent) => {
     if (!resizeRef.current) return;
 
-    const xMoved = resizeRef.current?.event.clientY - e.clientY;
-    setHeight(resizeRef.current.height + xMoved);
+    const yMoved = resizeRef.current?.event.clientY - e.clientY;
+    setHeight(resizeRef.current.height + yMoved);
   };
 
   const resizeStartHandler: React.MouseEventHandler = (e) => {

@@ -1,0 +1,43 @@
+.sidebar {
+  background-color: transparent;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.sidebar .sidebar-resizer {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: -5px;
+  width: 10px;
+  background-color: transparent;
+  cursor: e-resize;
+  z-index: 20;
+}
+.sidebar .sidebar-resizer::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 5px;
+  background-color: var(--lies);
+  width: 1px;
+}
+.sidebar .sidebar-resizer::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 40px;
+  width: 12px;
+  background-color: transparent;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.sidebar .sidebar-resizer:hover::after,
+.sidebar .sidebar-resizer:hover::before {
+  background-color: var(--active);
+}
