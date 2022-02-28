@@ -26,7 +26,7 @@ const NewTimeline: React.FC<NewTimelineProps> = ({ initialLayers }) => {
   const { layers } = layerControl;
   const { leftPosition, zoom, timelineBarMouseDown, wheelHandler } =
     useZoomAndPan({
-      initialZoom: 1,
+      initialZoom: 3,
       duration,
       panSpeed: 1,
       zoomSpeed: 0.1,
