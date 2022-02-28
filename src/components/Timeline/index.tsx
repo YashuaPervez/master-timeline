@@ -1,12 +1,12 @@
 import React from "react";
 
 //
-import useRender from "../hooks/useRender";
-import useZoomAndPan from "../hooks/useZoomAndPan";
-import useNodes, { Node } from "../hooks/useNodes";
-import useLayers, { Layer } from "../hooks/useLayers";
-import useCursor from "../hooks/useCursor";
-import "./timeline.css";
+import useRender from "../../hooks/useRender";
+import useZoomAndPan from "../../hooks/useZoomAndPan";
+import useNodes, { Node } from "../../hooks/useNodes";
+import useLayers, { Layer } from "../../hooks/useLayers";
+import useCursor from "../../hooks/useCursor";
+import "./index.css";
 
 type TimelineProps = {
   initialZoom?: number;
@@ -51,7 +51,6 @@ const Timeline: React.FC<TimelineProps> = ({
     controlLayers,
     leftPosition,
     controlCursor,
-    
   });
 
   return (

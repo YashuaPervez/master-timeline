@@ -1,0 +1,54 @@
+.timeline-wrapper {
+  background-color: var(--main);
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+.timeline-wrapper .resizer {
+  position: absolute;
+  top: -5px;
+  left: 0px;
+  right: 0px;
+  height: 10px;
+  background-color: transparent;
+  cursor: n-resize;
+  z-index: 20;
+}
+.timeline-wrapper .resizer::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 0px;
+  right: 0px;
+  background-color: var(--lies);
+  height: 1px;
+}
+.timeline-wrapper .resizer::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 12px;
+  width: 40px;
+  background-color: transparent;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.timeline-wrapper .resizer:hover::after,
+.timeline-wrapper .resizer:hover::before {
+  background-color: var(--active);
+}
+
+.timeline-wrapper .timeline-content {
+  /* background-color: orange; */
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 10;
+  overflow: hidden;
+}

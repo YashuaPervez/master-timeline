@@ -5,6 +5,16 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+  background-color: rgb(10, 10, 10);
+}
+
+:root {
+  --main: #09181c;
+  --lies: #1f383f;
+  --active: #20f384;
+}
+
 ul {
   list-style: none;
 }

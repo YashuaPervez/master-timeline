@@ -1,11 +1,13 @@
 // Components
+import TimelineWrapper from "./components/TimelineWrapper";
 import Timeline from "./components/Timeline";
 
 const App = () => {
   return (
     <div className="app">
-      <Timeline
-        duration={30}
+      <TimelineWrapper />
+      {/* <Timeline
+        duration={100}
         initialZoom={1}
         zoomSpeed={0.2}
         panSpeed={1.4}
@@ -37,8 +39,17 @@ const App = () => {
             ],
             open: true,
           },
+          {
+            id: "three-layer"
+          },
+          {
+            id: "four-layer"
+          },
+          {
+            id: "five-layer"
+          },
         ]}
-      />
+      /> */}
     </div>
   );
 };
