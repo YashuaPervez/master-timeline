@@ -17,7 +17,11 @@ const Sidebar: React.FC<SidebarProps> = ({ children, width, setWidth }) => {
     if (!resizeRef.current) return;
 
     const xMoved = e.clientX - resizeRef.current.event.clientX;
-    setWidth(resizeRef.current.width + xMoved);
+
+    const newWidth = resizeRef.current.width + xMoved;
+    if (newWidth > 419 && newWidth < 1024) {
+      setWidth(newWidth);
+    }
   };
 
   const resizeStartHandler: React.MouseEventHandler = (e) => {

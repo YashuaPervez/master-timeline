@@ -28,7 +28,7 @@ const useZoomAndPan = ({
 
     //
     const scrollBarContainer = document.getElementById(
-      "scrollable-container"
+      "main-timeline"
     ) as HTMLDivElement;
     const { width: scrollBarContainerWidth } =
       scrollBarContainer.getBoundingClientRect();
@@ -59,7 +59,7 @@ const useZoomAndPan = ({
 
   const wheelHandler: React.MouseEventHandler = (e: any) => {
     const scrollContainer = document.getElementById(
-      "scrollable-container"
+      "main-timeline"
     ) as HTMLDivElement;
     const {
       x: scX,
@@ -101,6 +101,8 @@ const useZoomAndPan = ({
   };
 
   const timelineBarMouseDown: React.MouseEventHandler = (e) => {
+    console.log("aaaa clicked");
+
     registeredEvent = e;
     registeredLeftPosition = leftPosition;
 
