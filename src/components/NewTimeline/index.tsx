@@ -9,6 +9,7 @@ import "./index.css";
 import { LayerObj } from "./Layer";
 import useLayer from "./Layer/useLayer";
 import useZoomAndPan from "../../hooks/useZoomAndPan";
+import useRender from "../../hooks/useRender";
 
 type NewTimelineProps = {
   initialLayers: LayerObj[];
@@ -30,6 +31,11 @@ const NewTimeline: React.FC<NewTimelineProps> = ({ initialLayers }) => {
       panSpeed: 1,
       zoomSpeed: 0.1,
     });
+  const { renderSecondGuides, renderDecimeterGuides } = useRender({
+    zoom,
+    duration,
+    leftPosition,
+  });
 
   return (
     <div className="timeline">
@@ -57,6 +63,8 @@ const NewTimeline: React.FC<NewTimelineProps> = ({ initialLayers }) => {
         style={{ left: width + 20 }}
         onWheel={wheelHandler}
       >
+        {renderSecondGuides()}
+        {renderDecimeterGuides()}
         <div
           className="scroll-container"
           style={{ width: duration * zoom * 100, left: leftPosition }}

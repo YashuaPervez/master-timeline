@@ -21,9 +21,7 @@
 
 .timeline .main-timeline .scroll-container {
   position: absolute;
-  background-image: linear-gradient(to right, red 0%, yellow 50%, green 100%);
   top: 80px;
-  /* left: 0px; */
   height: 168px;
   width: 3000px;
 }

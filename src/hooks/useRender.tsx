@@ -6,9 +6,9 @@ type UseRenderArgs = {
   zoom: number;
   duration: number;
   leftPosition: number;
-  controlNodes: UseNodeReturn;
-  controlLayers: UseLayersReturn;
-  controlCursor: UseCursorReturn;
+  // controlNodes: UseNodeReturn;
+  // controlLayers: UseLayersReturn;
+  // controlCursor: UseCursorReturn;
 };
 
 let renderedLayers: string[] = [];
@@ -17,13 +17,13 @@ const useRender = ({
   zoom,
   duration,
   leftPosition,
-  controlNodes,
-  controlLayers,
-  controlCursor,
-}: UseRenderArgs) => {
-  const { nodes, moveNodeStart } = controlNodes;
-  const { layers, toggleLayer } = controlLayers;
-  const { progress } = controlCursor;
+}: // controlNodes,
+// controlLayers,
+// controlCursor,
+UseRenderArgs) => {
+  // const { nodes, moveNodeStart } = controlNodes;
+  // const { layers, toggleLayer } = controlLayers;
+  // const { progress } = controlCursor;
 
   const renderSecondGuides = () => {
     let seconds = 0;
@@ -39,13 +39,29 @@ const useRender = ({
         <div
           style={{
             position: "absolute",
-            left: seconds * zoom * 100,
-            backgroundColor: "black",
-            height: "100%",
+            left: seconds * zoom * 100 + leftPosition,
+            backgroundColor: "var(--lies)",
+            height: 8,
             width: 1,
+            top: 32,
           }}
         >
-          {seconds}s
+          <div
+            style={{
+              position: "absolute",
+              bottom: 12,
+              left: "50%",
+              transform: "translate(-50%)",
+              fontSize: 12,
+              width: 30,
+              color: "#fff",
+              textAlign: "center",
+            }}
+          >
+            {`${seconds.toLocaleString("en", {
+              minimumIntegerDigits: 2,
+            })} s`}
+          </div>
         </div>
       );
       seconds++;
@@ -69,13 +85,27 @@ const useRender = ({
         <div
           style={{
             position: "absolute",
-            left: decimeters * zoom * 10,
-            backgroundColor: "black",
-            height: "100%",
+            left: decimeters * zoom * 10 + leftPosition,
+            backgroundColor: "var(--lies)",
+            height: 8,
             width: 1,
+            top: 32,
           }}
         >
-          {decimeters / 10}s
+          <div
+            style={{
+              position: "absolute",
+              bottom: 12,
+              left: "50%",
+              transform: "translate(-50%)",
+              fontSize: 12,
+              width: 30,
+              color: "#fff",
+              textAlign: "center",
+            }}
+          >
+            {decimeters / 10}s
+          </div>
         </div>
       );
       decimeters++;
@@ -84,149 +114,149 @@ const useRender = ({
     return guideArray;
   };
 
-  const renderLayers = () => {
-    const layerNodesArray: React.ReactNode[] = [];
-    const _renderedLayers: string[] = [];
+  // const renderLayers = () => {
+  //   const layerNodesArray: React.ReactNode[] = [];
+  //   const _renderedLayers: string[] = [];
 
-    const destructureLayerArray = (layers: Layer[]) => {
-      layers.forEach((layer, i) => {
-        const childToBeRendered = layer.open && layer.childrens?.length !== 0;
+  //   const destructureLayerArray = (layers: Layer[]) => {
+  //     layers.forEach((layer, i) => {
+  //       const childToBeRendered = layer.open && layer.childrens?.length !== 0;
 
-        // Push to main array
-        layerNodesArray.push(
-          <div
-            style={{
-              position: "absolute",
-              top: 40 + 40 * layerNodesArray.length,
-              left: 0,
-              right: 0,
-              height: "40px",
-              borderBottom: childToBeRendered ? "" : "1px solid black",
-              borderTop: i === 0 ? "1px solid black" : undefined,
-            }}
-            className="layer"
-          ></div>
-        );
-        _renderedLayers.push(layer.id);
+  //       // Push to main array
+  //       layerNodesArray.push(
+  //         <div
+  //           style={{
+  //             position: "absolute",
+  //             top: 40 + 40 * layerNodesArray.length,
+  //             left: 0,
+  //             right: 0,
+  //             height: "40px",
+  //             borderBottom: childToBeRendered ? "" : "1px solid black",
+  //             borderTop: i === 0 ? "1px solid black" : undefined,
+  //           }}
+  //           className="layer"
+  //         ></div>
+  //       );
+  //       _renderedLayers.push(layer.id);
 
-        // Operate on child
-        if (childToBeRendered) {
-          destructureLayerArray(layer.childrens || []);
-        }
-      });
-    };
+  //       // Operate on child
+  //       if (childToBeRendered) {
+  //         destructureLayerArray(layer.childrens || []);
+  //       }
+  //     });
+  //   };
 
-    destructureLayerArray(layers);
-    renderedLayers = _renderedLayers;
+  //   destructureLayerArray(layers);
+  //   renderedLayers = _renderedLayers;
 
-    return layerNodesArray;
-  };
+  //   return layerNodesArray;
+  // };
 
-  const renderLayersLabels = () => {
-    const layerNodesArray: React.ReactNode[] = [];
+  // const renderLayersLabels = () => {
+  //   const layerNodesArray: React.ReactNode[] = [];
 
-    const destructureLayerArray = (layers: Layer[]) => {
-      layers.forEach((layer, i) => {
-        const hasChildren = layer.childrens && layer.childrens?.length !== 0
-        const childToBeRendered = layer.open && hasChildren;
+  //   const destructureLayerArray = (layers: Layer[]) => {
+  //     layers.forEach((layer, i) => {
+  //       const hasChildren = layer.childrens && layer.childrens?.length !== 0
+  //       const childToBeRendered = layer.open && hasChildren;
 
-        // Push to main array
-        layerNodesArray.push(
-          <div
-            style={{
-              position: "absolute",
-              top: 40 * layerNodesArray.length,
-              left: 0,
-              right: 0,
-              height: 40,
-              borderBottom: childToBeRendered ? "" : "1px solid black",
-              borderTop: i === 0 ? "1px solid black" : undefined,
-              padding: "0px 10px",
-              display: "flex",
-              alignItems: "center",
-            }}
-            className="layer"
-          >
-            <div
-              style={{
-                flex: 1,
-              }}
-            >
-              {layer.id}
-            </div>
-            {hasChildren && (
-              <div>
-                <button onClick={() => toggleLayer(layer.id)}>{layer.open ? "Close" : "Open"}</button>
-              </div>
-            )}
-          </div>
-        );
+  //       // Push to main array
+  //       layerNodesArray.push(
+  //         <div
+  //           style={{
+  //             position: "absolute",
+  //             top: 40 * layerNodesArray.length,
+  //             left: 0,
+  //             right: 0,
+  //             height: 40,
+  //             borderBottom: childToBeRendered ? "" : "1px solid black",
+  //             borderTop: i === 0 ? "1px solid black" : undefined,
+  //             padding: "0px 10px",
+  //             display: "flex",
+  //             alignItems: "center",
+  //           }}
+  //           className="layer"
+  //         >
+  //           <div
+  //             style={{
+  //               flex: 1,
+  //             }}
+  //           >
+  //             {layer.id}
+  //           </div>
+  //           {hasChildren && (
+  //             <div>
+  //               <button onClick={() => toggleLayer(layer.id)}>{layer.open ? "Close" : "Open"}</button>
+  //             </div>
+  //           )}
+  //         </div>
+  //       );
 
-        // Operate on child
-        if (childToBeRendered) {
-          destructureLayerArray(layer.childrens || []);
-        }
-      });
-    };
+  //       // Operate on child
+  //       if (childToBeRendered) {
+  //         destructureLayerArray(layer.childrens || []);
+  //       }
+  //     });
+  //   };
 
-    destructureLayerArray(layers);
+  //   destructureLayerArray(layers);
 
-    return layerNodesArray;
-  };
+  //   return layerNodesArray;
+  // };
 
-  const renderCursor = () => {
-    return (
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: progress * zoom * 100,
-          width: 1,
-          backgroundColor: "purple",
-        }}
-      ></div>
-    );
-  };
+  // const renderCursor = () => {
+  //   return (
+  //     <div
+  //       style={{
+  //         position: "absolute",
+  //         top: 0,
+  //         bottom: 0,
+  //         left: progress * zoom * 100,
+  //         width: 1,
+  //         backgroundColor: "purple",
+  //       }}
+  //     ></div>
+  //   );
+  // };
 
-  const renderNodes = () => {
-    const nodesArray: React.ReactNode[] = [];
-    nodes.forEach((node) => {
-      if (renderedLayers.includes(node.layer)) {
-        nodesArray.push(
-          <div
-            style={{
-              position: "absolute",
-              top: 45 + renderedLayers.indexOf(node.layer) * 40,
-              left: zoom * node.position * 100 + leftPosition,
-              transform: "translateX(-50%)",
-            }}
-          >
-            <div
-              style={{
-                height: 30,
-                width: 30,
-                backgroundColor: "purple",
-                borderRadius: "50%",
-              }}
-              onMouseDown={(e) => moveNodeStart(e, node.id, node.position)}
-            ></div>
-          </div>
-        );
-      }
-    });
+  // const renderNodes = () => {
+  //   const nodesArray: React.ReactNode[] = [];
+  //   nodes.forEach((node) => {
+  //     if (renderedLayers.includes(node.layer)) {
+  //       nodesArray.push(
+  //         <div
+  //           style={{
+  //             position: "absolute",
+  //             top: 45 + renderedLayers.indexOf(node.layer) * 40,
+  //             left: zoom * node.position * 100 + leftPosition,
+  //             transform: "translateX(-50%)",
+  //           }}
+  //         >
+  //           <div
+  //             style={{
+  //               height: 30,
+  //               width: 30,
+  //               backgroundColor: "purple",
+  //               borderRadius: "50%",
+  //             }}
+  //             onMouseDown={(e) => moveNodeStart(e, node.id, node.position)}
+  //           ></div>
+  //         </div>
+  //       );
+  //     }
+  //   });
 
-    return nodesArray;
-  };
+  //   return nodesArray;
+  // };
 
   return {
     renderSecondGuides,
     renderDecimeterGuides,
-    renderLayers,
-    renderLayersLabels,
-    renderNodes,
-    renderCursor,
-    renderedLayers
+    // renderLayers,
+    // renderLayersLabels,
+    // renderNodes,
+    // renderCursor,
+    // renderedLayers
   };
 };
 
