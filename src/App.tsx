@@ -58,6 +58,9 @@ const App = () => {
               id: "node-1",
               layer: "main-layer",
               position: 2.4,
+              onTrigger() {
+                console.log(`aaaa ${this.id} hit`);
+              },
             },
           ]}
         />

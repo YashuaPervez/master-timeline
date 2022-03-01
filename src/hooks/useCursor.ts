@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 
+import { Node } from "../hooks/useNodes";
+
 // Function Types
 type StartProgress = () => void;
 type StopProgress = () => void;
@@ -12,9 +14,14 @@ export type UseCursorReturn = {
   reset: Reset;
 };
 
-let registeredProgress: number = 0;
+type UseCursorArgs = {
+  nodes: Node[];
+};
 
-const useCursor = (): UseCursorReturn => {
+let registeredProgress: number = 0;
+let nodesDone: string[] = [];
+
+const useCursor = ({ nodes }: UseCursorArgs): UseCursorReturn => {
   const [progress, setProgress] = useState<number>(0);
   const [startTime, setStartTime] = useState<number>(0);
   const intervelRef = useRef<NodeJS.Timer | null>(null);
@@ -26,8 +33,18 @@ const useCursor = (): UseCursorReturn => {
         const timeDifference = timeNow - startTime;
 
         const newProgress = registeredProgress + timeDifference / 1000;
+
+        const roundOffProgress = Math.round(newProgress * 10) / 10;
+        const nodeToTrigger = nodes.find(
+          (node) => node.position === roundOffProgress
+        );
+        if (nodeToTrigger && !nodesDone.includes(nodeToTrigger.id)) {
+          nodesDone.push(nodeToTrigger.id);
+          nodeToTrigger.onTrigger?.();
+        }
+
         setProgress(newProgress);
-      }, 10);
+      }, 25);
       intervelRef.current = progressInterval;
     } else if (intervelRef.current) {
       clearInterval(intervelRef.current);
@@ -35,7 +52,12 @@ const useCursor = (): UseCursorReturn => {
     }
   }, [startTime]);
 
+  useEffect(() => {
+    stopProgress();
+  }, [nodes]);
+
   const startProgress: StartProgress = () => {
+    nodesDone = [];
     if (!intervelRef.current) {
       const timeNow = new Date().getTime();
       setStartTime(timeNow);

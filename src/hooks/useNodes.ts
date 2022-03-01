@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { UseLayerReturn } from "../components/NewTimeline/Layer/useLayer";
+import { UseCursorReturn } from "./useCursor";
 
 export type Node = {
   id: string;
   position: number;
   layer: string;
+  onTrigger?: () => void;
 };
 
 // Function Types
@@ -47,8 +49,6 @@ const useNodes = ({
     }
 
     const movedPx = e.clientX - registeredEvent.clientX;
-
-    console.log("aaaa movedPx >>", movedPx);
 
     const movedSeconds = movedPx / (zoom * 100);
 
@@ -114,6 +114,9 @@ const useNodes = ({
         id: `${new Date().getTime()}`,
         layer: renderedLayers[layerIndex],
         position,
+        onTrigger() {
+          console.log(`aaaa ${this.id} hit`);
+        },
       };
 
       return [...prev, newNode];

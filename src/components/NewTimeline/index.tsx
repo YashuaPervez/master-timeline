@@ -43,7 +43,7 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
     initialNodes,
     controlLayer,
   });
-  const controlCursor = useCursor();
+  const controlCursor = useCursor({ nodes: controlNodes.nodes });
   const {
     renderSecondGuides,
     renderDecimeterGuides,
@@ -79,7 +79,7 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
         <div
           className="progress"
           style={{
-            width: `calc(${(controlCursor.progress / duration) * 100}% - 22px)`,
+            width: `calc(0% - 22px)`,
           }}
         ></div>
       </div>
