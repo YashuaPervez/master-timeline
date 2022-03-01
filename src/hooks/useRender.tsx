@@ -225,10 +225,17 @@ UseRenderArgs) => {
           <div
             style={{
               position: "absolute",
-              top: 88 + renderedLayers.indexOf(node.layer) * 21,
+              top: 82 + renderedLayers.indexOf(node.layer) * 21,
               left: zoom * node.position * 100 + leftPosition,
               transform: "translateX(-50%)",
+              height: 16,
+              width: 16,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
             }}
+            onMouseDown={(e) => moveNodeStart(e, node.id, node.position)}
           >
             <div
               style={{
@@ -237,7 +244,6 @@ UseRenderArgs) => {
                 backgroundColor: "var(--active)",
                 borderRadius: "50%",
               }}
-              onMouseDown={(e) => moveNodeStart(e, node.id, node.position)}
             ></div>
           </div>
         );

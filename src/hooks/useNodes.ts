@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { UseLayerReturn } from "../components/NewTimeline/Layer/useLayer";
 
 export type Node = {
   id: string;
@@ -12,12 +13,13 @@ export type MoveNodeStart = (
   id: string,
   position: number
 ) => void;
-type AddNewNode = (e: React.MouseEvent, layers: string[]) => void;
+type AddNewNode = (e: React.MouseEvent) => void;
 
 type UseNodeArgs = {
   initialNodes: Node[];
   zoom: number;
   leftPosition: number;
+  controlLayer: UseLayerReturn;
 };
 
 export type UseNodeReturn = {
@@ -34,7 +36,9 @@ const useNodes = ({
   initialNodes,
   zoom,
   leftPosition,
+  controlLayer,
 }: UseNodeArgs): UseNodeReturn => {
+  const { renderedLayers } = controlLayer;
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
 
   const moveNodeHandler = (e: MouseEvent) => {
@@ -84,9 +88,9 @@ const useNodes = ({
     document.addEventListener("mouseup", mouseUpHandler);
   };
 
-  const addNewNode: AddNewNode = (e, layers) => {
+  const addNewNode: AddNewNode = (e) => {
     const scrollbarContainer = document.getElementById(
-      "scrollable-container"
+      "scroll-container"
     ) as HTMLDivElement;
     const { x: scX, y: scY } = scrollbarContainer.getBoundingClientRect();
 
@@ -95,9 +99,8 @@ const useNodes = ({
       y: e.clientY - scY,
     };
 
-    const timeClicked =
-      (positionInScrollContainer.x - leftPosition) / (zoom * 100);
-    const layerIndex = Math.floor((positionInScrollContainer.y - 40) / 40);
+    const timeClicked = positionInScrollContainer.x / (zoom * 100);
+    const layerIndex = Math.floor(positionInScrollContainer.y / 21);
 
     let position: number = 0;
     if (zoom < 3.6) {
@@ -109,7 +112,7 @@ const useNodes = ({
     setNodes((prev) => {
       const newNode = {
         id: `${new Date().getTime()}`,
-        layer: layers[layerIndex],
+        layer: renderedLayers[layerIndex],
         position,
       };
 
