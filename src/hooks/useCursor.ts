@@ -34,10 +34,14 @@ const useCursor = ({ nodes }: UseCursorArgs): UseCursorReturn => {
 
         const newProgress = registeredProgress + timeDifference / 1000;
 
-        const roundOffProgress = Math.round(newProgress * 10) / 10;
-        const nodeToTrigger = nodes.find(
-          (node) => node.position === roundOffProgress
-        );
+        const roundOffProgress = Math.round(newProgress * 100) / 100;
+
+        const nodeToTrigger = nodes.find((node) => {
+          const difference: number = (node.position || 0) - roundOffProgress;
+
+          return Boolean(difference <= 0.015 && difference >= -0.015);
+        });
+
         if (nodeToTrigger && !nodesDone.includes(nodeToTrigger.id)) {
           nodesDone.push(nodeToTrigger.id);
           nodeToTrigger.onTrigger?.();
