@@ -40,6 +40,7 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
     zoom,
     leftPosition,
     initialNodes,
+    controlLayer,
   });
   const { renderSecondGuides, renderDecimeterGuides, renderNodes } = useRender({
     zoom,
@@ -87,12 +88,19 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
         {renderDecimeterGuides()}
         <div
           className="scroll-container"
-          style={{ width: duration * zoom * 100, left: leftPosition }}
+          id="scroll-container"
+          style={{
+            width: duration * zoom * 100,
+            left: leftPosition,
+            height: renderedLayers.length * 21,
+          }}
           onMouseDown={timelineBarMouseDown}
+          onDoubleClick={controlNodes.addNewNode}
         ></div>
 
         {renderNodes()}
       </div>
+      <div className="backdrop-container" id="backdrop-container"></div>
     </div>
   );
 };

@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+// Components
+import ColorPicker from "../../ColorPicker";
+
 //
 import { DownAngle, Eye } from "../../icon";
 import { UseLayerReturn } from "./useLayer";
@@ -73,6 +76,15 @@ const Layer: React.FC<LayerProps> = ({
                 return (
                   <div className={`control-unit c-${i + 1}`}>
                     <input className="input form-unit" disabled={disabled} />
+                  </div>
+                );
+              }
+
+              if (el === "color-picker") {
+                return (
+                  <div className={`control-unit c-${i + 1}`}>
+                    <ColorPicker disabled={disabled} />
+                    {/* <button className="picker" disabled={disabled}></button> */}
                   </div>
                 );
               }

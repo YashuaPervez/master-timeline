@@ -22,8 +22,6 @@
 .timeline .main-timeline .scroll-container {
   position: absolute;
   top: 80px;
-  height: 168px;
-  width: 3000px;
 }
 
 .timeline .progress-bar {
@@ -171,7 +169,7 @@ CONTROLS
   align-items: center;
   justify-content: flex-end;
   flex: 1;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .timeline .layers-list .layer .label .controls .control-unit {
@@ -217,4 +215,14 @@ CONTROLS
 
 .timeline .layers-list .layer .label .controls .input {
   padding: 0px 4px;
+}
+
+.timeline .backdrop {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  z-index: 100;
 }

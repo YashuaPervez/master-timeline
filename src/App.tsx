@@ -36,7 +36,7 @@ const App = () => {
                     {
                       id: "main-three-two-layer",
                       label: "Main Three Two Layer",
-                      controls: ["input"],
+                      controls: ["input", "color-picker"],
                     },
                   ],
                 },
