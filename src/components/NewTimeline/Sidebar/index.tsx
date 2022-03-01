@@ -19,7 +19,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children, width, setWidth }) => {
     const xMoved = e.clientX - resizeRef.current.event.clientX;
 
     const newWidth = resizeRef.current.width + xMoved;
-    if (newWidth > 419 && newWidth < 1024) {
+    if (newWidth > 319 && newWidth < 1024) {
       setWidth(newWidth);
     }
   };

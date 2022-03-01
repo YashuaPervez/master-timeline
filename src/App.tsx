@@ -16,16 +16,12 @@ const App = () => {
                 {
                   id: "main-one-layer",
                   label: "Main One Layer",
-                  controls: {
-                    select: true,
-                  },
+                  controls: ["select"],
                 },
                 {
                   id: "main-two-layer",
                   label: "Main Two Layer",
-                  controls: {
-                    select: true,
-                  },
+                  controls: ["select"],
                 },
                 {
                   id: "main-three-layer",
@@ -35,34 +31,24 @@ const App = () => {
                     {
                       id: "main-three-one-layer",
                       label: "Main Three One Layer",
-                      controls: {
-                        input: true,
-                      },
+                      controls: ["input"],
                     },
                     {
                       id: "main-three-two-layer",
                       label: "Main Three Two Layer",
-                      controls: {
-                        input: true,
-                      },
+                      controls: ["input"],
                     },
                   ],
                 },
                 {
                   id: "main-four-layer",
                   label: "Main Four Layer",
-                  controls: {
-                    input: true,
-                    select: true,
-                  },
+                  controls: ["input", "select"],
                 },
                 {
                   id: "main-five-layer",
                   label: "Main Five Layer",
-                  controls: {
-                    input: true,
-                    select: true,
-                  },
+                  controls: ["input", "select"],
                 },
               ],
             },
@@ -75,50 +61,6 @@ const App = () => {
             },
           ]}
         />
-        {/* <Timeline
-          duration={100}
-          initialZoom={1}
-          zoomSpeed={0.2}
-          panSpeed={1.4}
-          initialNodes={[
-            {
-              id: "node-1",
-              position: 3,
-              layer: "one-layer",
-            },
-            {
-              id: "node-2",
-              position: 6,
-              layer: "two-one-layer",
-            },
-          ]}
-          initialLayers={[
-            {
-              id: "one-layer",
-            },
-            {
-              id: "two-layer",
-              childrens: [
-                {
-                  id: "two-one-layer",
-                },
-                {
-                  id: "two-two-layer",
-                },
-              ],
-              open: true,
-            },
-            {
-              id: "three-layer",
-            },
-            {
-              id: "four-layer",
-            },
-            {
-              id: "five-layer",
-            },
-          ]}
-        /> */}
       </TimelineWrapper>
     </div>
   );

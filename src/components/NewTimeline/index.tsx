@@ -49,8 +49,16 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
     controlLayer,
   });
 
+  let sidebarClass = "minified";
+  if (width > 500) {
+    sidebarClass = "one";
+  }
+  if (width > 860) {
+    sidebarClass = "two";
+  }
+
   return (
-    <div className="timeline">
+    <div className={`timeline ${sidebarClass}`}>
       <Sidebar width={width} setWidth={setWidth}>
         <div className="tabs"></div>
       </Sidebar>

@@ -50,10 +50,11 @@
   background-color: var(--lies);
 }
 
-.sidebar .column-1 {
-  z-index: 1;
-  right: 175px;
+.timeline.two .sidebar .column-1,
+.timeline.one .sidebar .column-1 {
+  right: 176px;
 }
-.sidebar .column-2 {
+
+.timeline.two .sidebar .column-2 {
   right: 345px;
 }

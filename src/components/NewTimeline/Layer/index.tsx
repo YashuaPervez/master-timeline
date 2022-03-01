@@ -9,10 +9,7 @@ export type LayerObj = {
   label: string;
   open?: boolean;
   children?: LayerObj[];
-  controls?: {
-    input?: boolean;
-    select?: boolean;
-  };
+  controls?: string[];
 };
 
 type LayerProps = {
@@ -59,20 +56,27 @@ const Layer: React.FC<LayerProps> = ({
             <span className="text">{layer.label}</span>
           </div>
           <div className="controls">
-            {layer.controls?.select && (
-              <div className="control-unit">
-                <select className="select form-unit" disabled={disabled}>
-                  <option>Normal</option>
-                  <option>Type 2</option>
-                  <option>Type 3</option>
-                </select>
-              </div>
-            )}
-            {layer.controls?.input && (
-              <div className="control-unit">
-                <input className="input form-unit" disabled={disabled} />
-              </div>
-            )}
+            {layer.controls?.map((el, i) => {
+              if (el === "input") {
+                return (
+                  <div className={`control-unit c-${i + 1}`}>
+                    <select className="select form-unit" disabled={disabled}>
+                      <option>Normal</option>
+                      <option>Type 2</option>
+                      <option>Type 3</option>
+                    </select>
+                  </div>
+                );
+              }
+
+              if (el === "select") {
+                return (
+                  <div className={`control-unit c-${i + 1}`}>
+                    <input className="input form-unit" disabled={disabled} />
+                  </div>
+                );
+              }
+            })}
           </div>
         </div>
         <div className="presenter" style={{ left: sidebarWidth + 8 }}></div>
