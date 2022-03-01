@@ -11,6 +11,7 @@ import useLayer from "./Layer/useLayer";
 import useZoomAndPan from "../../hooks/useZoomAndPan";
 import useRender from "../../hooks/useRender";
 import useNodes, { Node } from "../../hooks/useNodes";
+import useCursor from "../../hooks/useCursor";
 
 type NewTimelineProps = {
   initialLayers: LayerObj[];
@@ -42,12 +43,19 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
     initialNodes,
     controlLayer,
   });
-  const { renderSecondGuides, renderDecimeterGuides, renderNodes } = useRender({
+  const controlCursor = useCursor();
+  const {
+    renderSecondGuides,
+    renderDecimeterGuides,
+    renderNodes,
+    renderCursor,
+  } = useRender({
     zoom,
     duration,
     leftPosition,
     controlNodes,
     controlLayer,
+    controlCursor,
   });
 
   let sidebarClass = "minified";
@@ -61,10 +69,19 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
   return (
     <div className={`timeline ${sidebarClass}`}>
       <Sidebar width={width} setWidth={setWidth}>
-        <div className="tabs"></div>
+        <div className="tabs">
+          <button onClick={controlCursor.startProgress}>Start</button>
+          <button onClick={controlCursor.reset}>Reset</button>
+          <button onClick={controlCursor.stopProgress}>Stop</button>
+        </div>
       </Sidebar>
       <div className="progress-bar" style={{ left: width + 8 }}>
-        <div className="progress"></div>
+        <div
+          className="progress"
+          style={{
+            width: `calc(${(controlCursor.progress / duration) * 100}% - 22px)`,
+          }}
+        ></div>
       </div>
       <div className="layers-list">
         {layers.map((layer) => (
@@ -99,6 +116,7 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
         ></div>
 
         {renderNodes()}
+        {renderCursor()}
       </div>
       <div className="backdrop-container" id="backdrop-container"></div>
     </div>

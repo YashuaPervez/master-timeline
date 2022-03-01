@@ -8,7 +8,7 @@ type UseRenderArgs = {
   leftPosition: number;
   controlNodes: UseNodeReturn;
   controlLayer: UseLayerReturn;
-  // controlCursor: UseCursorReturn;
+  controlCursor: UseCursorReturn;
 };
 
 const useRender = ({
@@ -17,11 +17,11 @@ const useRender = ({
   leftPosition,
   controlNodes,
   controlLayer,
-}: // controlCursor,
-UseRenderArgs) => {
+  controlCursor,
+}: UseRenderArgs) => {
   const { nodes, moveNodeStart } = controlNodes;
   const { renderedLayers } = controlLayer;
-  // const { progress } = controlCursor;
+  const { progress } = controlCursor;
 
   const renderSecondGuides = () => {
     let seconds = 0;
@@ -112,110 +112,34 @@ UseRenderArgs) => {
     return guideArray;
   };
 
-  // const renderLayers = () => {
-  //   const layerNodesArray: React.ReactNode[] = [];
-  //   const _renderedLayers: string[] = [];
-
-  //   const destructureLayerArray = (layers: Layer[]) => {
-  //     layers.forEach((layer, i) => {
-  //       const childToBeRendered = layer.open && layer.childrens?.length !== 0;
-
-  //       // Push to main array
-  //       layerNodesArray.push(
-  //         <div
-  //           style={{
-  //             position: "absolute",
-  //             top: 40 + 40 * layerNodesArray.length,
-  //             left: 0,
-  //             right: 0,
-  //             height: "40px",
-  //             borderBottom: childToBeRendered ? "" : "1px solid black",
-  //             borderTop: i === 0 ? "1px solid black" : undefined,
-  //           }}
-  //           className="layer"
-  //         ></div>
-  //       );
-  //       _renderedLayers.push(layer.id);
-
-  //       // Operate on child
-  //       if (childToBeRendered) {
-  //         destructureLayerArray(layer.childrens || []);
-  //       }
-  //     });
-  //   };
-
-  //   destructureLayerArray(layers);
-  //   renderedLayers = _renderedLayers;
-
-  //   return layerNodesArray;
-  // };
-
-  // const renderLayersLabels = () => {
-  //   const layerNodesArray: React.ReactNode[] = [];
-
-  //   const destructureLayerArray = (layers: Layer[]) => {
-  //     layers.forEach((layer, i) => {
-  //       const hasChildren = layer.childrens && layer.childrens?.length !== 0
-  //       const childToBeRendered = layer.open && hasChildren;
-
-  //       // Push to main array
-  //       layerNodesArray.push(
-  //         <div
-  //           style={{
-  //             position: "absolute",
-  //             top: 40 * layerNodesArray.length,
-  //             left: 0,
-  //             right: 0,
-  //             height: 40,
-  //             borderBottom: childToBeRendered ? "" : "1px solid black",
-  //             borderTop: i === 0 ? "1px solid black" : undefined,
-  //             padding: "0px 10px",
-  //             display: "flex",
-  //             alignItems: "center",
-  //           }}
-  //           className="layer"
-  //         >
-  //           <div
-  //             style={{
-  //               flex: 1,
-  //             }}
-  //           >
-  //             {layer.id}
-  //           </div>
-  //           {hasChildren && (
-  //             <div>
-  //               <button onClick={() => toggleLayer(layer.id)}>{layer.open ? "Close" : "Open"}</button>
-  //             </div>
-  //           )}
-  //         </div>
-  //       );
-
-  //       // Operate on child
-  //       if (childToBeRendered) {
-  //         destructureLayerArray(layer.childrens || []);
-  //       }
-  //     });
-  //   };
-
-  //   destructureLayerArray(layers);
-
-  //   return layerNodesArray;
-  // };
-
-  // const renderCursor = () => {
-  //   return (
-  //     <div
-  //       style={{
-  //         position: "absolute",
-  //         top: 0,
-  //         bottom: 0,
-  //         left: progress * zoom * 100,
-  //         width: 1,
-  //         backgroundColor: "purple",
-  //       }}
-  //     ></div>
-  //   );
-  // };
+  const renderCursor = () => {
+    return (
+      <div
+        style={{
+          position: "absolute",
+          top: 40,
+          bottom: 0,
+          left: progress * zoom * 100 + leftPosition,
+          width: 1,
+          backgroundColor: "var(--active)",
+          zIndex: 5,
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            backgroundColor: "var(--active)",
+            height: 8,
+            width: 10,
+            top: -7,
+            left: "50%",
+            transform: "translate(-50%)",
+            clipPath: "polygon(100% 0, 0 0, 50% 100%)",
+          }}
+        ></div>
+      </div>
+    );
+  };
 
   const renderNodes = () => {
     const nodesArray: React.ReactNode[] = [];
@@ -256,11 +180,8 @@ UseRenderArgs) => {
   return {
     renderSecondGuides,
     renderDecimeterGuides,
-    // renderLayers,
-    // renderLayersLabels,
     renderNodes,
-    // renderCursor,
-    // renderedLayers
+    renderCursor,
   };
 };
 
