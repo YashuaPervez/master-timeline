@@ -15,7 +15,7 @@ export type MoveNodeStart = (
   id: string,
   position: number
 ) => void;
-type AddNewNode = (e: React.MouseEvent) => void;
+type AddNewNode = (time: number, layer: string) => void;
 
 type UseNodeArgs = {
   initialNodes: Node[];
@@ -88,31 +88,31 @@ const useNodes = ({
     document.addEventListener("mouseup", mouseUpHandler);
   };
 
-  const addNewNode: AddNewNode = (e) => {
-    const scrollbarContainer = document.getElementById(
-      "scroll-container"
-    ) as HTMLDivElement;
-    const { x: scX, y: scY } = scrollbarContainer.getBoundingClientRect();
+  const addNewNode: AddNewNode = (time: number, layer: string) => {
+    // const scrollbarContainer = document.getElementById(
+    //   "scroll-container"
+    // ) as HTMLDivElement;
+    // const { x: scX, y: scY } = scrollbarContainer.getBoundingClientRect();
 
-    const positionInScrollContainer = {
-      x: e.clientX - scX,
-      y: e.clientY - scY,
-    };
+    // const positionInScrollContainer = {
+    //   x: e.clientX - scX,
+    //   y: e.clientY - scY,
+    // };
 
-    const timeClicked = positionInScrollContainer.x / (zoom * 100);
-    const layerIndex = Math.floor(positionInScrollContainer.y / 21);
+    // const timeClicked = positionInScrollContainer.x / (zoom * 100);
+    // const layerIndex = Math.floor(positionInScrollContainer.y / 21);
 
     let position: number = 0;
     if (zoom < 3.6) {
-      position = Math.round(timeClicked);
+      position = Math.round(time);
     } else if (zoom >= 3.6) {
-      position = Math.round(timeClicked * 10) / 10;
+      position = Math.round(time * 10) / 10;
     }
 
     setNodes((prev) => {
       const newNode = {
-        id: `${new Date().getTime()}`,
-        layer: renderedLayers[layerIndex],
+        id: `${new Date().getTime()}-node`,
+        layer: layer,
         position,
         onTrigger() {
           console.log(`aaaa ${this.id} hit`);

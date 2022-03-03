@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LayerObj } from ".";
+import { LayerObj } from "../Layers/Layer";
 
 type UseLayerArgs = {
   initialLayers: LayerObj[];

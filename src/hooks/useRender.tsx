@@ -37,19 +37,17 @@ const useRender = ({
         <div
           style={{
             position: "absolute",
-            left: seconds * zoom * 100 + leftPosition,
+            transform: `translate(${
+              seconds * zoom * 100 + leftPosition
+            }px, 32px)`,
             backgroundColor: "var(--lies)",
             height: 8,
             width: 1,
-            top: 32,
           }}
         >
           <div
             style={{
-              position: "absolute",
-              bottom: 12,
-              left: "50%",
-              transform: "translate(-50%)",
+              transform: "translate(-50%, -18px)",
               fontSize: 12,
               width: 30,
               color: "#fff",
@@ -83,19 +81,18 @@ const useRender = ({
         <div
           style={{
             position: "absolute",
-            left: decimeters * zoom * 10 + leftPosition,
+            transform: `translate(${
+              decimeters * zoom * 10 + leftPosition
+            }px, 32px)`,
             backgroundColor: "var(--lies)",
             height: 8,
             width: 1,
-            top: 32,
           }}
         >
           <div
             style={{
               position: "absolute",
-              bottom: 12,
-              left: "50%",
-              transform: "translate(-50%)",
+              transform: "translate(-50%, -18px)",
               fontSize: 12,
               width: 30,
               color: "#fff",

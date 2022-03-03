@@ -106,6 +106,18 @@ const useZoomAndPan = ({
     registeredEvent = e;
     registeredLeftPosition = leftPosition;
 
+    const node: any = e.target;
+    const interactables = ["node", "onion"];
+    let isInteractable = false;
+    interactables.forEach((i) => {
+      if (node.className.includes(i)) {
+        isInteractable = true;
+      }
+    });
+    if (isInteractable) {
+      return;
+    }
+
     const mouseUpHandler = () => {
       document.removeEventListener("mousemove", mouseMove);
       document.removeEventListener("mouseup", mouseUpHandler);

@@ -16,15 +16,26 @@
   top: 0px;
   right: 20px;
   bottom: 0px;
-  overflow: hidden;
+  /* overflow: hidden; */
+
+  /* background-image: linear-gradient(to right, red, yellow, green); */
 }
+
+/* .timeline .main-timeline .time-splitter {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 40px;
+} */
 
 .timeline .main-timeline .scroll-container {
   position: absolute;
-  top: 80px;
+  transform: translateY(80px);
+  background-color: blue;
 }
 
-.timeline .progress-bar {
+/* .timeline .progress-bar {
   position: absolute;
   top: 40px;
   right: 8px;
@@ -33,9 +44,9 @@
   border: 1px solid var(--lies);
   z-index: 5;
   overflow: hidden;
-}
+} */
 
-.timeline .progress-bar::before,
+/* .timeline .progress-bar::before,
 .timeline .progress-bar::after {
   content: "";
   position: absolute;
@@ -52,7 +63,7 @@
   right: 0px;
   border-right: none;
   border-left: 1px solid var(--lies);
-}
+} */
 
 .timeline .progress-bar .progress {
   height: 100%;
