@@ -89,25 +89,13 @@ const useNodes = ({
   };
 
   const addNewNode: AddNewNode = (time: number, layer: string) => {
-    // const scrollbarContainer = document.getElementById(
-    //   "scroll-container"
-    // ) as HTMLDivElement;
-    // const { x: scX, y: scY } = scrollbarContainer.getBoundingClientRect();
-
-    // const positionInScrollContainer = {
-    //   x: e.clientX - scX,
-    //   y: e.clientY - scY,
-    // };
-
-    // const timeClicked = positionInScrollContainer.x / (zoom * 100);
-    // const layerIndex = Math.floor(positionInScrollContainer.y / 21);
-
     let position: number = 0;
-    if (zoom < 3.6) {
-      position = Math.round(time);
-    } else if (zoom >= 3.6) {
-      position = Math.round(time * 10) / 10;
-    }
+    position = time
+    // if (zoom < 3.6) {
+    //   position = Math.round(time);
+    // } else if (zoom >= 3.6) {
+    //   position = Math.round(time * 10) / 10;
+    // }
 
     setNodes((prev) => {
       const newNode = {

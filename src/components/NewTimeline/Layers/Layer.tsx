@@ -39,7 +39,8 @@ const Layer: React.FC<LayerProps> = ({
   const addNodeHandler: React.MouseEventHandler = (e) => {
     const { x: layerX } = e.currentTarget.getBoundingClientRect();
     const xClicked = e.clientX - layerX;
-    const time = (xClicked - leftPosition) / (zoom * 100);
+    const time = (xClicked - leftPosition - 10) / (zoom * 100);
+
     controlNodes.addNewNode(time, layer.id);
   };
 
