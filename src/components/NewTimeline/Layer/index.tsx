@@ -83,7 +83,7 @@ const Layer: React.FC<LayerProps> = ({
               if (el === "color-picker") {
                 return (
                   <div className={`control-unit c-${i + 1}`}>
-                    <ColorPicker disabled={disabled} />
+                    {/* <ColorPicker /> */}
                     {/* <button className="picker" disabled={disabled}></button> */}
                   </div>
                 );

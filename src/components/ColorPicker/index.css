@@ -1,17 +1,17 @@
-.timeline .layers-list .layer .label .controls .picker-container {
+.picker-container {
   display: flex;
   align-items: center;
   position: relative;
 }
 
-.timeline .layers-list .layer .label .controls .picker {
+.picker {
   height: 18px;
   width: 18px;
   border-radius: 50%;
   border: 2px solid var(--lies);
 }
 
-.timeline .layers-list .layer .label .controls .picker:disabled {
+.picker:disabled {
   cursor: auto;
   filter: brightness(0.75);
   border-width: 0px;
@@ -21,7 +21,7 @@
   margin-left: 2px;
 }
 
-.timeline .layers-list .layer .label .controls .picker-popover {
+.picker-popover {
   position: absolute;
   top: 0px;
   left: 20px;

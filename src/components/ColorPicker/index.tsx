@@ -6,11 +6,16 @@ import { ColorChangeHandler, SketchPicker } from "react-color";
 import "./index.css";
 
 type ColorPickerProps = {
+  open: boolean;
   disabled: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ColorPicker: React.FC<ColorPickerProps> = ({ disabled }) => {
-  const [open, setOpen] = useState(false);
+const ColorPicker: React.FC<ColorPickerProps> = ({
+  open,
+  disabled,
+  setOpen,
+}) => {
   const [color, setColor] = useState<string>("#ff0000");
 
   const toggleOpen = () => {
@@ -29,9 +34,9 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ disabled }) => {
       <div className="picker-container">
         <button
           className="picker"
-          disabled={disabled}
           onClick={toggleOpen}
           style={{ backgroundColor: color }}
+          disabled={disabled}
         ></button>
         {open && (
           <div className="picker-popover">

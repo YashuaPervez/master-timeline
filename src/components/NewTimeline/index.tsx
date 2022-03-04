@@ -6,6 +6,7 @@ import TimeSplitter from "./TimeSplitter";
 import Layers from "./Layers";
 import ProgressBar from "./Progressbar";
 import Cursor from "./Cursor";
+import LayerLabels from "./LayerLabels";
 
 // import Layer from "./Layer";
 
@@ -49,19 +50,6 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
     controlLayer,
   });
   const controlCursor = useCursor({ nodes: controlNodes.nodes });
-  // const {
-  //   renderSecondGuides,
-  //   renderDecimeterGuides,
-  //   renderNodes,
-  //   renderCursor,
-  // } = useRender({
-  //   zoom,
-  //   duration,
-  //   leftPosition,
-  //   controlNodes,
-  //   controlLayer,
-  //   controlCursor,
-  // });
 
   let sidebarClass = "minified";
   if (width > 500) {
@@ -79,27 +67,12 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
           <button onClick={controlCursor.reset}>Reset</button>
           <button onClick={controlCursor.stopProgress}>Stop</button>
         </div>
+        <LayerLabels
+          controlLayer={controlLayer}
+          renderedLayers={renderedLayers}
+        />
       </Sidebar>
-      {/* <div className="progress-bar" style={{ left: width + 8 }}>
-        <div
-          className="progress"
-          style={{
-            width: `calc(0% - 22px)`,
-          }}
-        ></div>
-      </div> */}
-      {/* <div className="layers-list">
-        {layers.map((layer) => (
-          <Layer
-            key={layer.id}
-            layer={layer}
-            level={0}
-            sidebarWidth={width}
-            control={controlLayer}
-            ancestors={[]}
-          />
-        ))}
-      </div> */}
+
       <div
         className="main-timeline"
         id="main-timeline"
@@ -126,65 +99,6 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
           timelineBarMouseDown={timelineBarMouseDown}
           controlNodes={controlNodes}
         />
-        {/* <div className="time-splitter">
-          {renderSecondGuides()}
-          {renderDecimeterGuides()}
-        </div>
-        {renderSecondGuides()}
-        {renderDecimeterGuides()}
-        <div
-          className="scroll-container"
-          id="scroll-container"
-          style={{
-            height: renderedLayers.length * 21,
-            position: "relative",
-            zIndex: 100,
-          }}
-          onMouseDown={timelineBarMouseDown}
-          onDoubleClick={controlNodes.addNewNode}
-        ></div>
-        <div
-          className="layers-group"
-          style={{
-            position: "absolute",
-            backgroundColor: "green",
-            top: 80,
-            width: "100%",
-          }}
-        >
-          {renderedLayers.map((layer, i) => (
-            <div
-              style={{
-                height: 20,
-                position: "absolute",
-                backgroundColor: "orange",
-                width: "100%",
-                transform: `translateY(${i * 21}px)`,
-              }}
-              onMouseDown={timelineBarMouseDown}
-            >
-              {layer}
-              <div
-                className="node"
-                style={{
-                  width: 20,
-                  height: 20,
-                  position: "absolute",
-                  top: 0,
-                  left: 50,
-                  backgroundColor: "purple",
-                  zIndex: 200,
-                }}
-                onClick={(e) => {
-                }}
-              ></div>
-              {renderNodes()}
-            </div>
-          ))}
-        </div>
-
-        {renderNodes()}
-        {renderCursor()} */}
       </div>
       <div className="backdrop-container" id="backdrop-container"></div>
     </div>
