@@ -52,7 +52,7 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
   const controlCursor = useCursor({ nodes: controlNodes.nodes });
 
   let sidebarClass = "minified";
-  if (width > 500) {
+  if (width > 640) {
     sidebarClass = "one";
   }
   if (width > 860) {
