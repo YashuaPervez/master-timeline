@@ -7,6 +7,7 @@ import Layers from "./Layers";
 import ProgressBar from "./Progressbar";
 import Cursor from "./Cursor";
 import LayerLabels from "./LayerLabels";
+import OnionLab from "./OnionLab";
 
 // import Layer from "./Layer";
 
@@ -15,13 +16,18 @@ import "./index.css";
 import { LayerObj } from "./Layers/Layer";
 import useLayer from "./Layer/useLayer";
 import useZoomAndPan from "../../hooks/useZoomAndPan";
-import useRender from "../../hooks/useRender";
+// import useRender from "../../hooks/useRender";
 import useNodes, { Node } from "../../hooks/useNodes";
+import useOnion from "./OnionLab/useOnion";
 import useCursor from "../../hooks/useCursor";
+import Tools from "./Tools";
+import useTools from "./Tools/useTools";
+import { OnionObj } from "./Onion";
 
 type NewTimelineProps = {
   initialLayers: LayerObj[];
   initialNodes: Node[];
+  initialOnions: OnionObj[];
 };
 
 const duration = 15;
@@ -29,6 +35,7 @@ const duration = 15;
 const NewTimeline: React.FC<NewTimelineProps> = ({
   initialLayers,
   initialNodes,
+  initialOnions,
 }) => {
   const [width, setWidth] = useState<number>(420);
 
@@ -44,11 +51,18 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
       zoomSpeed: 0.1,
       width,
     });
+  const controlTools = useTools();
   const controlNodes = useNodes({
     zoom,
     leftPosition,
     initialNodes,
     controlLayer,
+  });
+  const conrolOnions = useOnion({
+    zoom,
+    leftPosition,
+    controlLayer,
+    initialOnions,
   });
   const controlCursor = useCursor({ nodes: controlNodes.nodes });
 
@@ -68,6 +82,7 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
           <button onClick={controlCursor.reset}>Reset</button>
           <button onClick={controlCursor.stopProgress}>Stop</button>
         </div>
+        <Tools controlTools={controlTools} />
         <LayerLabels
           controlLayer={controlLayer}
           renderedLayers={renderedLayers}
@@ -100,6 +115,14 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
           timelineBarMouseDown={timelineBarMouseDown}
           controlNodes={controlNodes}
         />
+        {controlTools.activeTool === "onion" && (
+          <OnionLab
+            controlOnions={conrolOnions}
+            controlLayer={controlLayer}
+            leftPosition={leftPosition}
+            zoom={zoom}
+          />
+        )}
       </div>
       <div className="backdrop-container" id="backdrop-container"></div>
     </div>

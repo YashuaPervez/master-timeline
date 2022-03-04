@@ -39,8 +39,6 @@ const Label: React.FC<LabelProps> = ({
   const myIndex = renderedLayers.indexOf(label.id);
   const myAddress = [...prevAddress, label.id];
 
-  console.log(`aaaa ${label.id} >>`, parentDisabled);
-
   return (
     <>
       <LabelStyled

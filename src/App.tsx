@@ -63,6 +63,13 @@ const App = () => {
               },
             },
           ]}
+          initialOnions={[
+            {
+              duration: 0.4,
+              layer: "main-layer",
+              time: 3.4,
+            },
+          ]}
         />
       </TimelineWrapper>
     </div>
