@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type UseZoomAndPanArgs = {
   initialZoom: number;
@@ -6,6 +6,7 @@ type UseZoomAndPanArgs = {
   // leftPosition: number;
   duration: number;
   panSpeed: number;
+  width: number;
 };
 
 let registeredEvent: React.MouseEvent | null = null;
@@ -17,9 +18,23 @@ const useZoomAndPan = ({
   // leftPosition,
   duration,
   panSpeed,
+  width,
 }: UseZoomAndPanArgs) => {
   const [zoom, setZoom] = useState<number>(initialZoom);
   const [leftPosition, setLeftPosition] = useState<number>(0);
+
+  useEffect(() => {
+    const scrollContainer = document.getElementById(
+      "main-timeline"
+    ) as HTMLDivElement;
+    const { width: scW } = scrollContainer.getBoundingClientRect();
+
+    const minZoom = scW / duration / 100;
+    if (zoom <= minZoom) {
+      setZoom(minZoom);
+      setLeftPosition(0);
+    }
+  }, [width]);
 
   const mouseMove = (e: MouseEvent) => {
     if (!registeredEvent) return;
@@ -72,6 +87,8 @@ const useZoomAndPan = ({
       y: e.clientY - scY,
     };
 
+    const minZoom = scW / duration / 100;
+
     let newZoom: number;
     let newLeftPosition: number;
 
@@ -90,7 +107,7 @@ const useZoomAndPan = ({
 
     const minLeft = (duration * newZoom * 100 - scW) * -1;
 
-    if (newZoom > 1.2 && newZoom < 10) {
+    const adjustLeftPosition = (newLeftPosition: number, minLeft: number) => {
       if (newLeftPosition > 0) {
         setLeftPosition(0);
       } else if (newLeftPosition < minLeft) {
@@ -98,7 +115,14 @@ const useZoomAndPan = ({
       } else {
         setLeftPosition(newLeftPosition);
       }
+    };
+
+    if (newZoom > minZoom && newZoom < 12) {
+      adjustLeftPosition(newLeftPosition, minLeft);
       setZoom(newZoom);
+    } else if (newZoom <= minZoom) {
+      adjustLeftPosition(newLeftPosition, minLeft);
+      setZoom(minZoom);
     }
   };
 

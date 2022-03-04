@@ -42,6 +42,7 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
       duration,
       panSpeed: 1,
       zoomSpeed: 0.1,
+      width,
     });
   const controlNodes = useNodes({
     zoom,
