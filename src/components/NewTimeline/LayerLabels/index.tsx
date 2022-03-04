@@ -18,7 +18,14 @@ const LayerLabels: React.FC<LayerLabelsStyled> = ({
     <LayerLabelsStyled className="label-set">
       <>
         {controlLayer.layers.map((label) => (
-          <Label label={label} renderedLayers={renderedLayers} />
+          <Label
+            label={label}
+            renderedLayers={renderedLayers}
+            level={0}
+            controlLayer={controlLayer}
+            prevAddress={[]}
+            parentDisabled={false}
+          />
         ))}
       </>
     </LayerLabelsStyled>

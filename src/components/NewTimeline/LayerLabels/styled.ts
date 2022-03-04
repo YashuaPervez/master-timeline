@@ -7,6 +7,7 @@ export const LayerLabelsStyled = styled.div`
 type LabelStyledProps = {
   open: boolean;
   disabled: boolean;
+  renderChildren: boolean;
 };
 
 export const LabelStyled = styled.div<LabelStyledProps>`
@@ -15,7 +16,7 @@ export const LabelStyled = styled.div<LabelStyledProps>`
   align-items: center;
   padding-right: 16px;
   position: absolute;
-  left: 0px;
+  left: 1px;
   right: 0px;
   z-index: ${(p) => (p.open ? 101 : 1)};
   filter: ${(p) => (p.disabled ? "brightness(0.5)" : "")};
@@ -62,9 +63,28 @@ export const LabelStyled = styled.div<LabelStyledProps>`
     z-index: 200;
     line-height: 20px;
     background-color: ${(p) => (p.disabled ? "var(--lies)" : "var(--main)")};
+    display: flex;
+
+    .children-toggle {
+      height: 20px;
+      width: 20px;
+      overflow: hidden;
+      margin-right: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: ${(p) => (p.renderChildren ? "" : "rotate(-90deg)")};
+
+      button {
+        margin-top: 4px;
+        background-color: transparent;
+        border: none;
+      }
+    }
 
     h3 {
       font-weight: 300;
+      height: 20px;
     }
   }
 
