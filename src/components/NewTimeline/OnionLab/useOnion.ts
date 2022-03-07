@@ -3,12 +3,14 @@ import { useRef, useState } from "react";
 //
 import { UseLayerReturn } from "../Layer/useLayer";
 import { OnionObj } from "../Onion/";
+import { UseToolsReturn } from "../Tools/useTools";
 
 type UseOnionArgs = {
   zoom: number;
   leftPosition: number;
   controlLayer: UseLayerReturn;
   initialOnions: OnionObj[];
+  controlTools: UseToolsReturn;
 };
 
 // Function Types
@@ -21,12 +23,15 @@ export type UseOnionReturn = {
     layerIndex: number;
     duration: number;
   };
+  onions: OnionObj[];
 };
 
 const useOnion = ({
   zoom,
   leftPosition,
   controlLayer,
+  initialOnions,
+  controlTools,
 }: UseOnionArgs): UseOnionReturn => {
   const dropOnionRootEventRef = useRef<{
     time: number;
@@ -34,6 +39,8 @@ const useOnion = ({
     screenX: number;
   } | null>(null);
   const addOnionEventRef = useRef<{ duration: number } | null>(null);
+
+  const [onions, setOnions] = useState<OnionObj[]>(initialOnions);
 
   const [createTime, setCreateTime] = useState<number>(0);
   const [createLayerIndex, setCreateLayerIndex] = useState<number>(0);
@@ -77,12 +84,19 @@ const useOnion = ({
 
       if (!dropOnionRootEventRef.current || !addOnionEventRef.current) return;
 
-      const newOnion = {
+      const newOnion: OnionObj = {
+        id: `${new Date().getTime()}`,
         time: dropOnionRootEventRef.current.time,
         layer: controlLayer.renderedLayers[layerIndex],
-        duration: Math.round(addOnionEventRef.current.duration * 10) / 10,
+        duration: addOnionEventRef.current.duration,
       };
 
+      console.log("aaaa newOnion >>", newOnion);
+
+      controlTools.setToolToActive(null);
+      setOnions((prev) => {
+        return [...prev, newOnion];
+      });
       setCreateDuration(0);
       setCreateLayerIndex(0);
       setCreateTime(0);
@@ -94,6 +108,7 @@ const useOnion = ({
 
   return {
     dropOnionRoot,
+    onions,
     create: {
       time: createTime,
       layerIndex: createLayerIndex,

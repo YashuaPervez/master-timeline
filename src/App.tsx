@@ -65,6 +65,7 @@ const App = () => {
           ]}
           initialOnions={[
             {
+              id: "onion-1",
               duration: 0.4,
               layer: "main-layer",
               time: 3.4,

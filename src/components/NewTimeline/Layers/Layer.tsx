@@ -1,9 +1,13 @@
+//Components
+import Onion from "../Onion";
+
 // Styled
 import { LayerStyled } from "./styled";
 
 //
 import Node, { NodeObj } from "../Node";
 import { UseNodeReturn } from "../../../hooks/useNodes";
+import { UseOnionReturn } from "../OnionLab/useOnion";
 
 export type LayerObj = {
   id: string;
@@ -20,6 +24,7 @@ type LayerProps = {
   leftPosition: number;
   zoom: number;
   controlNodes: UseNodeReturn;
+  controlOnions: UseOnionReturn;
 };
 
 const Layer: React.FC<LayerProps> = ({
@@ -29,10 +34,14 @@ const Layer: React.FC<LayerProps> = ({
   zoom,
   controlNodes,
   renderedLayers,
+  controlOnions,
 }) => {
   const hasChildren = layer.children && layer.children.length;
   const renderChildren = hasChildren && layer.open;
 
+  const myOnions = controlOnions.onions.filter(
+    (onion) => onion.layer === layer.id
+  );
   const myNodes = nodes.filter((node) => node.layer === layer.id);
   const myIndex = renderedLayers.indexOf(layer.id);
 
@@ -44,6 +53,8 @@ const Layer: React.FC<LayerProps> = ({
     controlNodes.addNewNode(time, layer.id);
   };
 
+  console.log("aaaa myOnions >>", myOnions);
+
   return (
     <>
       <LayerStyled
@@ -53,6 +64,9 @@ const Layer: React.FC<LayerProps> = ({
           top: myIndex * 21,
         }}
       >
+        {myOnions.map((onion) => (
+          <Onion onion={onion} leftPosition={leftPosition} zoom={zoom} />
+        ))}
         {myNodes.map((node) => (
           <Node
             node={node}
@@ -71,6 +85,7 @@ const Layer: React.FC<LayerProps> = ({
             zoom={zoom}
             controlNodes={controlNodes}
             renderedLayers={renderedLayers}
+            controlOnions={controlOnions}
           />
         ))}
     </>

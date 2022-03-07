@@ -5,6 +5,7 @@ import { LayersStyled } from "./styled";
 import Layer, { LayerObj } from "./Layer";
 import { NodeObj } from "../Node";
 import { UseNodeReturn } from "../../../hooks/useNodes";
+import { UseOnionReturn } from "../OnionLab/useOnion";
 
 type LayersProps = {
   layers: LayerObj[];
@@ -14,6 +15,7 @@ type LayersProps = {
   zoom: number;
   timelineBarMouseDown: React.MouseEventHandler<Element>;
   controlNodes: UseNodeReturn;
+  controlOnions: UseOnionReturn;
 };
 
 const Layers: React.FC<LayersProps> = ({
@@ -24,6 +26,7 @@ const Layers: React.FC<LayersProps> = ({
   timelineBarMouseDown,
   controlNodes,
   renderedLayers,
+  controlOnions,
 }) => {
   return (
     <LayersStyled
@@ -39,6 +42,7 @@ const Layers: React.FC<LayersProps> = ({
           zoom={zoom}
           controlNodes={controlNodes}
           renderedLayers={renderedLayers}
+          controlOnions={controlOnions}
         />
       ))}
     </LayersStyled>

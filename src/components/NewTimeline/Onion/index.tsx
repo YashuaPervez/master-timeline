@@ -1,4 +1,8 @@
+// Styled
+import { OnionStyled } from "./styled";
+
 export type OnionObj = {
+  id: string;
   layer: string;
   time: number;
   duration: number;
@@ -6,13 +10,23 @@ export type OnionObj = {
 
 type OnionProps = {
   onion: OnionObj;
-  time: number;
-  duration: number;
-  name: string;
+  leftPosition: number;
+  zoom: number;
 };
 
-const Onion: React.FC<OnionProps> = ({ onion, time, duration, name }) => {
-  return <div>{name}</div>;
+const Onion: React.FC<OnionProps> = ({ onion, zoom, leftPosition }) => {
+  return (
+    <OnionStyled
+      style={{
+        width: onion.duration * zoom * 100,
+        transform: `translateX(${
+          onion.time * zoom * 100 + leftPosition + 10
+        }px)`,
+      }}
+    >
+      {onion.id}
+    </OnionStyled>
+  );
 };
 
 export default Onion;

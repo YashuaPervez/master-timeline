@@ -63,6 +63,7 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
     leftPosition,
     controlLayer,
     initialOnions,
+    controlTools,
   });
   const controlCursor = useCursor({ nodes: controlNodes.nodes });
 
@@ -114,6 +115,7 @@ const NewTimeline: React.FC<NewTimelineProps> = ({
           zoom={zoom}
           timelineBarMouseDown={timelineBarMouseDown}
           controlNodes={controlNodes}
+          controlOnions={conrolOnions}
         />
         {controlTools.activeTool === "onion" && (
           <OnionLab
